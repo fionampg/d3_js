@@ -49,13 +49,19 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
 
     // Create scalars 
     // Linear scale to display min in axis, and max in data
+    
     var xLinearScale = d3.scaleLinear()
-    .domain([8.1, d3.max(censusdata, d => d.poverty)])
+    .domain([d3.max(censusdata, d => d[poverty]) * 1.2,
+              d3.min(censusdata, d => d[poverty]) * 0.8])
     .range([0,width]);
+    
 
+    
     var yLinearScale = d3.scaleLinear()
-    .domain([20, d3.max(censusdata, d => d.healthcare)])
-    .range([height,0]);
+    .domain([d3.max(censusdata, d => d[healthcare]) * 0.8,
+            d3.min(censusdata, d => d[healthcare]) * 1.2])
+    .range([0, height])
+      
 
     // // Create scale functions. scale y to chart height.
     // var yLinearScale = d3.scaleLinear().range([height, 0]);
@@ -82,12 +88,12 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
         .data(censusdata)
         .enter()
         .append("circle")
-        .attr("cx", d => xLinearScale(d.poverty))
-        .attr("cy", d => yLinearScale(d.healthcare))
+        .attr("cx", d => xLinearScale(d[poverty]))
+        .attr("cy", d => yLinearScale(d[healthcare]))
         .attr("r", "13")
         .attr("fill", "#788dc2")
         .attr("opacity", "0.75");
-
+    
     // Append text to circles in plot
     // var circlesGroup = chartGroup.selectAll("circle")
     //     .data(censusdata)
@@ -134,6 +140,11 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
       .attr("class", "axisText")
       .text("In Poverty (%)");
     
+// .catch(function(error){
+//   console.log(error);
+//   )
+// } 
+
 
 //end bracket for reading data   
 });
