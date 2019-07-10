@@ -1,6 +1,6 @@
-# d3_js
+# d3_js: Data Journalism
 
---- Work in Progress 
+LINK: https://fionampg.github.io/d3_js/index.html 
 
 Analyzing the current trends shaping people's lives, as well as creating charts, graphs, and interactive elements. In this case, a bubble scatter plot that shows in the correlation between Poverty and Healthcare
 
