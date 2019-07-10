@@ -1,6 +1,4 @@
-# d3_js
-
---- Work in Progress 
+# d3_js: Data Journalism
 
 Analyzing the current trends shaping people's lives, as well as creating charts, graphs, and interactive elements. In this case, a bubble scatter plot that shows in the correlation between Poverty and Healthcare
 
