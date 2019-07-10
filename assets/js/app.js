@@ -51,17 +51,16 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
     // Linear scale to display min in axis, and max in data
     
     var xLinearScale = d3.scaleLinear()
-    .domain([d3.max(censusdata, d => d[poverty]) * 1.2,
-              d3.min(censusdata, d => d[poverty]) * 0.8])
-    .range([0,width]);
-    
+    .domain([d3.min(censusdata, d => d.poverty) * 0.8, 
+    d3.max(censusdata, d => d.poverty) * 1.2])
+    .range([0,width]);   
 
-    
+    // console.log(xLinearScale) 
+        
     var yLinearScale = d3.scaleLinear()
-    .domain([d3.max(censusdata, d => d[healthcare]) * 0.8,
-            d3.min(censusdata, d => d[healthcare]) * 1.2])
-    .range([0, height])
-      
+    .domain([3, d3.max(censusdata, d => d.healthcare) * 1])
+    .range([height, 0])
+    // console.log(yLinearScale)
 
     // // Create scale functions. scale y to chart height.
     // var yLinearScale = d3.scaleLinear().range([height, 0]);
@@ -85,14 +84,14 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
 
     // Create and append circles for scatter plot
     var circlesGroup = chartGroup.selectAll("circle")
-        .data(censusdata)
-        .enter()
-        .append("circle")
-        .attr("cx", d => xLinearScale(d[poverty]))
-        .attr("cy", d => yLinearScale(d[healthcare]))
-        .attr("r", "13")
-        .attr("fill", "#788dc2")
-        .attr("opacity", "0.75");
+      .data(censusdata)
+      .enter()
+      .append("circle")
+      .attr("cx", d => xLinearScale(d.poverty))
+      .attr("cy", d => yLinearScale(d.healthcare))
+      .attr("r", "13")
+      .attr("fill", "#788dc2")
+      .attr("opacity", "0.75");
     
     // Append text to circles in plot
     // var circlesGroup = chartGroup.selectAll("circle")
@@ -118,14 +117,31 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
     chartGroup.call(toolTip);
 
     // Create event listeners to display and hide the tooltip
-    circlesGroup.on("click", function(data) {
+    circlesGroup.on("mouseover", function(data) {
       toolTip.show(data, this);
     })
       // onmouseout event
       .on("mouseout", function(data, index) {
         toolTip.hide(data);
       });
-
+    
+    //Add text inside circle
+    chartGroup.selectAll(".dot")
+      .data(censusdata)
+      .enter()
+      .append("text")
+      .text(function(data) { return data.abbr; })
+      .attr('x', function(data) {
+        return xLinearScale(data.poverty);
+      })
+      .attr('y', function(data) {
+        return yLinearScale(data.healthcare);
+        })
+      .attr("font-size", "10px")
+      .attr("fill", "black")
+      .style("text-anchor", "middle");
+      
+      
     // Create axes labels
     chartGroup.append("text")
       .attr("transform", "rotate(-90)")
