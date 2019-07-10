@@ -34,12 +34,6 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
     // Print censusdata
     console.log(censusdata);
 
-    // // Loop through the data
-    // for (var i = 0; i < censusdata.length; i++){
-    //     console.log(i, censusdata[i].state, censusdata[i].poverty, censusdata[i].healthcare);
-    //     console.log(i, censusdata[i].obesity,censusdata[i].income);
-    // }
-
     // Loop through data and pass argument data/transform data to numbers
     censusdata.forEach(function(data){
         data.poverty = +data.poverty;
@@ -61,11 +55,6 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
     .domain([3, d3.max(censusdata, d => d.healthcare) * 1])
     .range([height, 0])
     // console.log(yLinearScale)
-
-    // // Create scale functions. scale y to chart height.
-    // var yLinearScale = d3.scaleLinear().range([height, 0]);
-    // // scale x to chart width.
-    // var xLinearScale = d3.scaleLinear().range([0, width]);
 
     // Create axes
     var xAxis = d3.axisBottom(xLinearScale)
@@ -93,18 +82,6 @@ d3.csv("assets/data/data.csv").then(function(censusdata){
       .attr("fill", "#788dc2")
       .attr("opacity", "0.75");
     
-    // Append text to circles in plot
-    // var circlesGroup = chartGroup.selectAll("circle")
-    //     .data(censusdata)
-    //     .enter()
-    //     .append("text")
-    //     .attr("x", d => xLinearScale(d.poverty))
-    //     .attr("y", d => yLinearScale(d.healthcare))
-    //     .style("font-size","12px")
-    //     .style("text-anchor","middle")
-    //     .style("fill", "white")
-    //     // .text(d => (d.abbr));
-
     // Initialize tool tip
     var toolTip = d3.tip()
       .attr("class", "tooltip")
